@@ -1,0 +1,12 @@
+[project]
+name = "subscribe-evanchen-cc"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Evan Chen", email = "evan@evanchen.cc" }
+]
+license = "MIT"
+urls = { repository = "https://github.com/vEnhance/subscribe.evanchen.cc" }
+requires-python = ">=3.14"
+dependencies = []
