@@ -83,11 +83,6 @@ SITE_ID = 1
 
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
-        "APP": {
-            "client_id": config("GOOGLE_CLIENT_ID", default=""),
-            "secret": config("GOOGLE_CLIENT_SECRET", default=""),
-            "key": "",
-        },
         "SCOPE": ["email"],
         "AUTH_PARAMS": {"access_type": "online"},
     }
