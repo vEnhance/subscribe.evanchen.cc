@@ -7,9 +7,23 @@ from postmarker.core import PostmarkClient
 from .forms import EmailSubscribeForm
 from .models import SubscriberEmail
 
+_DONE_TITLES = {
+    "subscribed": "Subscribed",
+    "unsubscribed": "Unsubscribed",
+    "already_subscribed": "Already subscribed",
+    "not_found": "Not found",
+}
+
+_CONFIRM_TITLES = {
+    "subscribe": "Confirm subscription",
+    "unsubscribe": "Confirm unsubscription",
+}
+
 
 def index(request):
-    return render(request, "mailing/index.html")
+    return render(
+        request, "mailing/index.html", {"page_title": "blog.evanchen.cc mailing list"}
+    )
 
 
 def subscribe_form(request):
@@ -19,56 +33,44 @@ def subscribe_form(request):
             email = form.cleaned_data["email"]
             obj, _ = SubscriberEmail.objects.get_or_create(email=email)
             if obj.subscribed:
-                return render(
-                    request,
-                    "mailing/done.html",
-                    {"action": "already_subscribed", "email": email},
-                )
+                return _render_done(request, "already_subscribed", email)
             _send_confirmation_email(email, obj.token, request)
-            return render(request, "mailing/confirmation_sent.html")
+            return render(
+                request,
+                "mailing/confirmation_sent.html",
+                {"page_title": "Check your email"},
+            )
     else:
         form = EmailSubscribeForm()
-    return render(request, "mailing/subscribe_form.html", {"form": form})
+    return render(
+        request,
+        "mailing/subscribe_form.html",
+        {"page_title": "Subscribe", "form": form},
+    )
 
 
 def confirm_subscription(request, token):
     try:
         obj = SubscriberEmail.objects.get(token=token)
     except SubscriberEmail.DoesNotExist:
-        return render(
-            request, "mailing/error.html", {"message": "Invalid or expired link."}
-        )
+        return render(request, "mailing/bad_token.html", {"page_title": "Link invalid"})
     if request.method == "POST":
         obj.subscribed = True
         obj.save()
-        return render(
-            request, "mailing/done.html", {"action": "subscribed", "email": obj.email}
-        )
-    return render(
-        request,
-        "mailing/confirm_action.html",
-        {"action": "subscribe", "email": obj.email},
-    )
+        return _render_done(request, "subscribed", obj.email)
+    return _render_confirm(request, "subscribe", obj.email)
 
 
 def unsubscribe_by_token(request, token):
     try:
         obj = SubscriberEmail.objects.get(token=token)
     except SubscriberEmail.DoesNotExist:
-        return render(
-            request, "mailing/error.html", {"message": "Invalid or expired link."}
-        )
+        return render(request, "mailing/bad_token.html", {"page_title": "Link invalid"})
     if request.method == "POST":
         obj.subscribed = False
         obj.save()
-        return render(
-            request, "mailing/done.html", {"action": "unsubscribed", "email": obj.email}
-        )
-    return render(
-        request,
-        "mailing/confirm_action.html",
-        {"action": "unsubscribe", "email": obj.email},
-    )
+        return _render_done(request, "unsubscribed", obj.email)
+    return _render_confirm(request, "unsubscribe", obj.email)
 
 
 @login_required
@@ -79,12 +81,8 @@ def oauth_subscribe(request):
         obj.subscribed = True
         obj.google_authenticated = True
         obj.save()
-        return render(
-            request, "mailing/done.html", {"action": "subscribed", "email": email}
-        )
-    return render(
-        request, "mailing/confirm_action.html", {"action": "subscribe", "email": email}
-    )
+        return _render_done(request, "subscribed", email)
+    return _render_confirm(request, "subscribe", email)
 
 
 @login_required
@@ -98,11 +96,31 @@ def oauth_unsubscribe(request):
             action = "unsubscribed"
         except SubscriberEmail.DoesNotExist:
             action = "not_found"
-        return render(request, "mailing/done.html", {"action": action, "email": email})
+        return _render_done(request, action, email)
+    return _render_confirm(request, "unsubscribe", email)
+
+
+def _render_done(request, action, email):
+    return render(
+        request,
+        "mailing/done.html",
+        {
+            "page_title": _DONE_TITLES.get(action, "Done"),
+            "action": action,
+            "email": email,
+        },
+    )
+
+
+def _render_confirm(request, action, email):
     return render(
         request,
         "mailing/confirm_action.html",
-        {"action": "unsubscribe", "email": email},
+        {
+            "page_title": _CONFIRM_TITLES[action],
+            "action": action,
+            "email": email,
+        },
     )
 
 

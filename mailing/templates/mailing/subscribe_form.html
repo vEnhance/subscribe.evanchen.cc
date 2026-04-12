@@ -1,15 +1,8 @@
 {% extends "mailing/base.html" %}
-{% block title %}
-    Subscribe
-{% endblock title %}
 {% block content %}
-    <h1>Subscribe</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Send confirmation email</button>
     </form>
-    <p>
-        <a href="{% url 'index' %}">Back</a>
-    </p>
 {% endblock content %}
