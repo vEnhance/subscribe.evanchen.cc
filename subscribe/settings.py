@@ -7,7 +7,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config("DJANGO_SECRET_KEY")
 PRODUCTION = config("IS_PRODUCTION", default=False, cast=bool)
 DEBUG = config("DEBUG", default=False, cast=bool)
-ALLOWED_HOSTS = ["subscribe.evanchen.cc", ".localhost", "127.0.0.1"]
+if PRODUCTION:
+    ALLOWED_HOSTS = ["subscribe.evanchen.cc", ".localhost", "127.0.0.1"]
+    SITE_URL = "https://subscribe.evanchen.cc"
+else:
+    INTERNAL_IPS = ["127.0.0.1"]
+    SITE_URL = "http://127.0.0.1"
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -86,7 +91,6 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 LOGIN_REDIRECT_URL = "/"
-SOCIALACCOUNT_AUTO_SIGNUP = True
 
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
@@ -94,5 +98,8 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / "static"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+SOCIALACCOUNT_AUTO_SIGNUP = True
