@@ -1,9 +1,10 @@
 {% extends "mailing/base.html" %}
 {% block title %}
-    Error
+    Link invalid
 {% endblock title %}
 {% block content %}
-    <p>{{ message }}</p>
+    <h1>Link invalid</h1>
+    <p>The link you provided doesn't seem to be working anymore.</p>
     <p>
         <a href="{% url 'index' %}">Back</a>
     </p>
