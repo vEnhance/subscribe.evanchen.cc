@@ -7,16 +7,12 @@
         {% csrf_token %}
         {% if action == "subscribe" %}
             <p>
-                Confirm subscription
-                for {{ email }}
-                ?
+                Confirm subscription for <b>{{ email }}</b>?
             </p>
             <button type="submit">Yes, subscribe me</button>
         {% elif action == "unsubscribe" %}
             <p>
-                Confirm unsubscription
-                for {{ email }}
-                ?
+                Confirm unsubscription for <b>{{ email }}</b>?
             </p>
             <button type="submit">Yes, unsubscribe me</button>
         {% endif %}
