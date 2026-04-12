@@ -1,0 +1,16 @@
+{% extends "mailing/base.html" %}
+{% block title %}Mailing List{% endblock %}
+{% block main %}
+<h1>Mailing List</h1>
+<ul>
+  <li>
+    <a href="/accounts/google/login/?next=/oauth/subscribe/">Subscribe with Gmail</a>
+  </li>
+  <li>
+    <a href="/subscribe/">Subscribe with another email</a>
+  </li>
+  <li>
+    <a href="/accounts/google/login/?next=/oauth/unsubscribe/">Unsubscribe with Gmail</a>
+  </li>
+</ul>
+{% endblock %}
