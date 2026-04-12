@@ -7,11 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config("DJANGO_SECRET_KEY")
 PRODUCTION = config("IS_PRODUCTION", default=False, cast=bool)
 DEBUG = config("DEBUG", default=False, cast=bool)
-ALLOWED_HOSTS = config(
-    "ALLOWED_HOSTS",
-    default="localhost,127.0.0.1",
-    cast=lambda v: [h.strip() for h in v.split(",")],
-)
+ALLOWED_HOSTS = ["subscribe.evanchen.cc", ".localhost", "127.0.0.1"]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
