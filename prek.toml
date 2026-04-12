@@ -65,3 +65,16 @@ hooks = [{ id = "rumdl" }, { id = "rumdl-fmt" }]
 repo = "https://github.com/zizmorcore/zizmor-pre-commit"
 rev = "v1.23.1"
 hooks = [{ id = "zizmor" }]
+
+[[repos]]
+repo = "https://github.com/djlint/djLint"
+rev = "v1.36.4"
+hooks = [
+  { id = "djlint-reformat", types = ["html"], files = "templates/" },
+  { id = "djlint", types = ["html"], files = "templates/" }
+]
+
+[[repos]]
+repo = "https://github.com/astral-sh/uv-pre-commit"
+rev = "0.11.6"
+hooks = [{ id = "uv-lock" }]
