@@ -96,6 +96,3 @@ USE_TZ = True
 STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-POSTMARK_API_KEY = config("POSTMARK_API_KEY", default="")
-POSTMARK_FROM_EMAIL = config("POSTMARK_FROM_EMAIL", default="")
