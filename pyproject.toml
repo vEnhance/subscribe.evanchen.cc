@@ -30,6 +30,7 @@ profile = "django"
 [dependency-groups]
 dev = [
     "prek>=0.3.8",
+    "pyright>=1.1.408",
     "pytest>=9.0.3",
     "pytest-django>=4.12.0",
     "werkzeug>=3.1.8",
