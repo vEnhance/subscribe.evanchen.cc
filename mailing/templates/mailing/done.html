@@ -3,7 +3,27 @@
     Done
 {% endblock title %}
 {% block main %}
-    <p>{{ message }}</p>
+    <p>
+        {% if action == "subscribed" %}
+            You are now subscribed
+            {% if email %}({{ email }}){% endif %}
+            .
+        {% elif action == "unsubscribed" %}
+            You have been unsubscribed
+            {% if email %}({{ email }}){% endif %}
+            .
+        {% elif action == "already_subscribed" %}
+            That email is already subscribed
+            {% if email %}({{ email }}){% endif %}
+            .
+        {% elif action == "not_found" %}
+            No subscription found for that account
+            {% if email %}({{ email }}){% endif %}
+            .
+        {% else %}
+            Done.
+        {% endif %}
+    </p>
     <p>
         <a href="{% url 'index' %}">Back</a>
     </p>
