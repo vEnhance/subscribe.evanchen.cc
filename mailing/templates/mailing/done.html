@@ -2,7 +2,7 @@
 {% block title %}
     Done
 {% endblock title %}
-{% block main %}
+{% block content %}
     <p>
         {% if action == "subscribed" %}
             You are now subscribed
@@ -27,4 +27,4 @@
     <p>
         <a href="{% url 'index' %}">Back</a>
     </p>
-{% endblock main %}
+{% endblock content %}
