@@ -74,26 +74,36 @@ def unsubscribe_by_token(request, token):
 @login_required
 def oauth_subscribe(request):
     email = request.user.email
-    obj, _ = SubscriberEmail.objects.get_or_create(email=email)
-    obj.subscribed = True
-    obj.google_authenticated = True
-    obj.save()
+    if request.method == "POST":
+        obj, _ = SubscriberEmail.objects.get_or_create(email=email)
+        obj.subscribed = True
+        obj.google_authenticated = True
+        obj.save()
+        return render(
+            request, "mailing/done.html", {"action": "subscribed", "email": email}
+        )
     return render(
-        request, "mailing/done.html", {"action": "subscribed", "email": email}
+        request, "mailing/confirm_action.html", {"action": "subscribe", "email": email}
     )
 
 
 @login_required
 def oauth_unsubscribe(request):
     email = request.user.email
-    try:
-        obj = SubscriberEmail.objects.get(email=email)
-        obj.subscribed = False
-        obj.save()
-        action = "unsubscribed"
-    except SubscriberEmail.DoesNotExist:
-        action = "not_found"
-    return render(request, "mailing/done.html", {"action": action, "email": email})
+    if request.method == "POST":
+        try:
+            obj = SubscriberEmail.objects.get(email=email)
+            obj.subscribed = False
+            obj.save()
+            action = "unsubscribed"
+        except SubscriberEmail.DoesNotExist:
+            action = "not_found"
+        return render(request, "mailing/done.html", {"action": action, "email": email})
+    return render(
+        request,
+        "mailing/confirm_action.html",
+        {"action": "unsubscribe", "email": email},
+    )
 
 
 def _send_confirmation_email(email, token, request):

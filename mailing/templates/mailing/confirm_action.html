@@ -2,20 +2,20 @@
 {% block title %}
     Confirm
 {% endblock title %}
-{% block main %}
+{% block content %}
     <form method="post">
         {% csrf_token %}
         {% if action == "subscribe" %}
             <p>
                 Confirm subscription
-                {% if email %}for {{ email }}{% endif %}
+                for {{ email }}
                 ?
             </p>
             <button type="submit">Yes, subscribe me</button>
         {% elif action == "unsubscribe" %}
             <p>
                 Confirm unsubscription
-                {% if email %}for {{ email }}{% endif %}
+                for {{ email }}
                 ?
             </p>
             <button type="submit">Yes, unsubscribe me</button>
@@ -24,4 +24,4 @@
     <p>
         <a href="{% url 'index' %}">Back</a>
     </p>
-{% endblock main %}
+{% endblock content %}
