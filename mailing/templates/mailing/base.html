@@ -6,13 +6,25 @@
         <meta name="description" content="Mailing list server for blog.evanchen.cc">
         <meta name="keywords" content="evan chen, blog, mailing list">
         <title>{{ page_title|default:"Mailing list for blog.evanchen.cc" }}</title>
+        <style type="text/css">
+            main {
+                max-width: 512px;
+                margin: 0 auto;
+            }
+            #foot-divider {
+                margin-top: 30px;
+            }
+        </style>
+        {% block extra_css %}
+        {% endblock extra_css %}
     </head>
     <body>
         <main>
-            <h1>{{ page_title|default:"Mailing list for blog.evanchen.cc" }}</h1>
+            {% if page_title %}<h1>{{ page_title }}</h1>{% endif %}
             {% block content %}
             {% endblock content %}
             {% block back_link %}
+                <hr id="foot-divider" />
                 <p>
                     <a href="{% url 'index' %}">Back</a>
                 </p>

@@ -1,12 +1,25 @@
 {% extends "mailing/base.html" %}
+{% block extra_css %}
+    <style type="text/css">
+    #le-serrafim {
+        font-size: 70%;
+        font-style: italic;
+    }
+    #le-serrafim a {
+        text-decoration: none;
+    }
+    </style>
+{% endblock extra_css %}
 {% block content %}
     <p>
-        This page lets you subscribe to email updates on the blog <a href="https://blog.evanchen.cc/"><code>blog.evanchen.cc</code></a>.
+        Howdy.
+        This is the mailing list for <a href="https://blog.evanchen.cc/"><code>blog.evanchen.cc</code></a>.
     </p>
-    <h2>With Google</h2>
+    <hr />
+    <h2>Subscribe with Google</h2>
     <p>
         If your email is associated to a Google account,
-        you can use OAuth to avoid having to send a useless "confirm your subscription" email.
+        you can use OAuth to avoid the useless "confirm your subscription" email.
     </p>
     <ul>
         <li>
@@ -14,9 +27,14 @@
         </li>
     </ul>
     <p>
-        Conversely, you can also <a href="{% url 'google_login' %}?next={% url 'oauth_unsubscribe' %}">unsubscribe with Google</a>.
+        (Conversely, you can also <a href="{% url 'google_login' %}?next={% url 'oauth_unsubscribe' %}">unsubscribe with Google</a>.)
     </p>
-    <h2>With other emails</h2>
+    <hr />
+    <h2>Subscribe with another email</h2>
+    <p>
+        You'll be asked to click a link sent to your email to ensure
+        you own the email address being subscribed.
+    </p>
     <ul>
         <li>
             <a href="{% url 'subscribe_form' %}">Subscribe with another email</a>
@@ -24,4 +42,9 @@
     </ul>
 {% endblock content %}
 {% block back_link %}
+    <hr id="foot-divider" />
+    <p id="le-serrafim">
+        What are you lookin' at? It's fun going insane.
+        — <a href="https://open.spotify.com/track/5hfKDfqthxHt6xsgCjimuO">르세라핌</a>
+    </p>
 {% endblock back_link %}
