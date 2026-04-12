@@ -278,18 +278,6 @@ wheels = [
 ]
 
 [[package]]
-name = "postmarker"
-version = "1.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "requests" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/51/79/a527c6e91bc1c6980bc779b83249f59bf1cba8b259147c799934297cc7a8/postmarker-1.0.tar.gz", hash = "sha256:e735303fdf8ede667a1c6e64a95a96e97f0dabbeca726d0ae1f066bdd799fe34", size = 21627, upload-time = "2022-01-15T14:11:24.201Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/a1/4b/045369491569fda223d2e0bc821534de14278dd4facdb386405ea17b9d80/postmarker-1.0-py3-none-any.whl", hash = "sha256:0fa49f236c7193650896cbf31bbfac34043e352574c6c7e3e2ad2b954704f064", size = 24134, upload-time = "2022-01-15T14:11:22.732Z" },
-]
-
-[[package]]
 name = "pycparser"
 version = "3.0"
 source = { registry = "https://pypi.org/simple" }
@@ -378,7 +366,6 @@ dependencies = [
     { name = "django" },
     { name = "django-allauth", extra = ["socialaccount"] },
     { name = "django-extensions" },
-    { name = "postmarker" },
     { name = "python-decouple" },
 ]
 
@@ -393,7 +380,6 @@ requires-dist = [
     { name = "django", specifier = ">=6.0.4" },
     { name = "django-allauth", extras = ["socialaccount"], specifier = ">=65.15.1" },
     { name = "django-extensions", specifier = ">=4.1" },
-    { name = "postmarker", specifier = ">=1.0" },
     { name = "python-decouple", specifier = ">=3.8" },
 ]
 
