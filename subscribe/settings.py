@@ -1,17 +1,22 @@
 import os
 from pathlib import Path
 
-from decouple import config
+from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = config("DJANGO_SECRET_KEY")
-PRODUCTION = config("IS_PRODUCTION", default=False, cast=bool)
-DEBUG = config("DEBUG", default=False, cast=bool)
+ENV_PATH = BASE_DIR / ".env"
+if ENV_PATH.exists():
+    load_dotenv(ENV_PATH)
+
+PRODUCTION = bool(int(os.getenv("IS_PRODUCTION") or 0))
+DEBUG = bool(int(os.getenv("DEBUG") or 0))
 if PRODUCTION:
+    SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
     ALLOWED_HOSTS = ["subscribe.evanchen.cc", ".localhost", "127.0.0.1"]
     SITE_URL = "https://subscribe.evanchen.cc"
 else:
+    SECRET_KEY = "come-read-my-blog"
     INTERNAL_IPS = ["127.0.0.1"]
     SITE_URL = "http://127.0.0.1"
 
