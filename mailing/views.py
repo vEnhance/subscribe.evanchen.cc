@@ -1,17 +1,11 @@
-from urllib.parse import urlencode
-
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.urls import reverse
 from postmarker.core import PostmarkClient
 
 from .forms import EmailSubscribeForm
 from .models import SubscriberEmail
-
-
-def _done_url(action, email):
-    return reverse("done") + "?" + urlencode({"action": action, "email": email})
 
 
 def index(request):
@@ -25,7 +19,11 @@ def subscribe_form(request):
             email = form.cleaned_data["email"]
             obj, _ = SubscriberEmail.objects.get_or_create(email=email)
             if obj.subscribed:
-                return redirect(_done_url("already_subscribed", email))
+                return render(
+                    request,
+                    "mailing/done.html",
+                    {"action": "already_subscribed", "email": email},
+                )
             _send_confirmation_email(email, obj.token, request)
             return render(request, "mailing/confirmation_sent.html")
     else:
@@ -40,9 +38,17 @@ def confirm_subscription(request, token):
         return render(
             request, "mailing/error.html", {"message": "Invalid or expired link."}
         )
-    obj.subscribed = True
-    obj.save()
-    return redirect(_done_url("subscribed", obj.email))
+    if request.method == "POST":
+        obj.subscribed = True
+        obj.save()
+        return render(
+            request, "mailing/done.html", {"action": "subscribed", "email": obj.email}
+        )
+    return render(
+        request,
+        "mailing/confirm_action.html",
+        {"action": "subscribe", "email": obj.email},
+    )
 
 
 def unsubscribe_by_token(request, token):
@@ -52,9 +58,17 @@ def unsubscribe_by_token(request, token):
         return render(
             request, "mailing/error.html", {"message": "Invalid or expired link."}
         )
-    obj.subscribed = False
-    obj.save()
-    return redirect(_done_url("unsubscribed", obj.email))
+    if request.method == "POST":
+        obj.subscribed = False
+        obj.save()
+        return render(
+            request, "mailing/done.html", {"action": "unsubscribed", "email": obj.email}
+        )
+    return render(
+        request,
+        "mailing/confirm_action.html",
+        {"action": "unsubscribe", "email": obj.email},
+    )
 
 
 @login_required
@@ -64,7 +78,9 @@ def oauth_subscribe(request):
     obj.subscribed = True
     obj.google_authenticated = True
     obj.save()
-    return redirect(_done_url("subscribed", email))
+    return render(
+        request, "mailing/done.html", {"action": "subscribed", "email": email}
+    )
 
 
 @login_required
@@ -77,12 +93,6 @@ def oauth_unsubscribe(request):
         action = "unsubscribed"
     except SubscriberEmail.DoesNotExist:
         action = "not_found"
-    return redirect(_done_url(action, email))
-
-
-def done(request):
-    action = request.GET.get("action", "")
-    email = request.GET.get("email", "")
     return render(request, "mailing/done.html", {"action": action, "email": email})
 
 

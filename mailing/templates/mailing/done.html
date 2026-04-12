@@ -1,25 +1,32 @@
 {% extends "mailing/base.html" %}
 {% block title %}
-    Done
+    {% if action == "subscribed" or action == "unsubscribed" %}
+        Done
+    {% else %}
+        Error
+    {% endif %}
 {% endblock title %}
 {% block content %}
+    <h1>
+        {% if action == "subscribed" or action == "already_subscribed" %}
+            Subscribed
+        {% elif action == "unsubscribed" or action == "not_found" %}
+            Unsubscribed
+        {% endif %}
+    </h1>
     <p>
         {% if action == "subscribed" %}
-            You are now subscribed
-            {% if email %}({{ email }}){% endif %}
-            .
+            The email <b>{{ email }}</b> is now subscribed!
+            You will receive an email on each new blog post.
         {% elif action == "unsubscribed" %}
-            You have been unsubscribed
-            {% if email %}({{ email }}){% endif %}
-            .
+            The email <b>{{ email }}</b> has now been unsubscribed.
+            You can return any time.
         {% elif action == "already_subscribed" %}
-            That email is already subscribed
-            {% if email %}({{ email }}){% endif %}
-            .
+            The email <b>{{ email }}</b> was already on the mailing list.
+            It remains on the mailing list
         {% elif action == "not_found" %}
-            No subscription found for that account
-            {% if email %}({{ email }}){% endif %}
-            .
+            You requested to unsubscribe <b>{{ email }}</b>,
+            but there is no existing subscription.
         {% else %}
             Done.
         {% endif %}

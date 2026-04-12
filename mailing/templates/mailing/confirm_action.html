@@ -1,0 +1,27 @@
+{% extends "mailing/base.html" %}
+{% block title %}
+    Confirm
+{% endblock title %}
+{% block main %}
+    <form method="post">
+        {% csrf_token %}
+        {% if action == "subscribe" %}
+            <p>
+                Confirm subscription
+                {% if email %}for {{ email }}{% endif %}
+                ?
+            </p>
+            <button type="submit">Yes, subscribe me</button>
+        {% elif action == "unsubscribe" %}
+            <p>
+                Confirm unsubscription
+                {% if email %}for {{ email }}{% endif %}
+                ?
+            </p>
+            <button type="submit">Yes, unsubscribe me</button>
+        {% endif %}
+    </form>
+    <p>
+        <a href="{% url 'index' %}">Back</a>
+    </p>
+{% endblock main %}
