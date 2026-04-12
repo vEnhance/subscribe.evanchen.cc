@@ -151,6 +151,18 @@ socialaccount = [
 ]
 
 [[package]]
+name = "django-discordo"
+version = "1.0.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "requests" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/04/ea/eec694d2bfb19a34b5b16cc90a8b89a0a11d9f3df83bc1e5e1b00878963e/django_discordo-1.0.0.tar.gz", hash = "sha256:9bfc6ac60077c285b3a16da99ccf01cb3caaa51cf7de940e3a52ab41dde3d733", size = 5640, upload-time = "2025-12-21T20:48:36.481Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/44/b0/6c715825f516ebb302969977a41a6cc94d07d780afc5ec68b0bed0326e62/django_discordo-1.0.0-py3-none-any.whl", hash = "sha256:9864e6cc2ca8233ba15673d7f4eb7e39d2993c4ae623457dec595d440f0fdf7b", size = 6511, upload-time = "2025-12-21T20:48:35.43Z" },
+]
+
+[[package]]
 name = "django-extensions"
 version = "4.1"
 source = { registry = "https://pypi.org/simple" }
@@ -325,6 +337,7 @@ source = { virtual = "." }
 dependencies = [
     { name = "django" },
     { name = "django-allauth", extra = ["socialaccount"] },
+    { name = "django-discordo" },
     { name = "django-extensions" },
     { name = "python-decouple" },
 ]
@@ -339,6 +352,7 @@ dev = [
 requires-dist = [
     { name = "django", specifier = ">=6.0.4" },
     { name = "django-allauth", extras = ["socialaccount"], specifier = ">=65.15.1" },
+    { name = "django-discordo", specifier = ">=1.0.0" },
     { name = "django-extensions", specifier = ">=4.1" },
     { name = "python-decouple", specifier = ">=3.8" },
 ]

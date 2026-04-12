@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 from decouple import config
@@ -103,3 +104,26 @@ STATIC_ROOT = BASE_DIR / "static"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 SOCIALACCOUNT_AUTO_SIGNUP = True
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "level": "DEBUG",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "INFO",
+    },
+}
+
+# Add Discord webhook handler if configured
+if os.getenv("DISCORD_WEBHOOK_URL"):
+    LOGGING["handlers"]["discord"] = {
+        "class": "django_discordo.DiscordWebhookHandler",
+        "level": "SUCCESS",
+    }
+    LOGGING["root"]["handlers"].append("discord")  # type: ignore[union-attr]
