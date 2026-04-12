@@ -1,18 +1,29 @@
 {% extends "mailing/base.html" %}
 {% block title %}
-    Mailing List
+    blog.evanchen.cc mailing list
 {% endblock title %}
 {% block main %}
-    <h1>Mailing List</h1>
+    <h1>blog.evanchen.cc mailing list</h1>
+    <p>
+        This page lets you subscribe to email updates on the blog <a href="https://blog.evanchen.cc/"><code>blog.evanchen.cc</code></a>.
+    </p>
+    <h2>With Google</h2>
+    <p>
+        If your email is associated to a Google account,
+        you can use OAUth to avoid having to send a useless "confirm your subscription" email.
+    </p>
     <ul>
         <li>
-            <a href="{% url 'google_login' %}?next={% url 'oauth_subscribe' %}">Subscribe with Gmail</a>
+            <a href="{% url 'google_login' %}?next={% url 'oauth_subscribe' %}">Subscribe with Google</a>
         </li>
+    </ul>
+    <p>
+        Conversely, you can also <a href="{% url 'google_login' %}?next={% url 'oauth_unsubscribe' %}">unsubscribe with Google</a>.
+    </p>
+    <h2>With other emails</h2>
+    <ul>
         <li>
             <a href="{% url 'subscribe_form' %}">Subscribe with another email</a>
-        </li>
-        <li>
-            <a href="{% url 'google_login' %}?next={% url 'oauth_unsubscribe' %}">Unsubscribe with Gmail</a>
         </li>
     </ul>
 {% endblock main %}
