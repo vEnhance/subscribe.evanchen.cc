@@ -20,6 +20,9 @@ dependencies = [
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "subscribe.settings"
+python_files = ["test_*.py", "tests.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
 
 [tool.djlint]
 profile = "django"
