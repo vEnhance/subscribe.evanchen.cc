@@ -17,6 +17,9 @@ dependencies = [
     "python-decouple>=3.8",
 ]
 
+[tool.djlint]
+profile = "django"
+
 [dependency-groups]
 dev = [
     "pytest>=9.0.3",

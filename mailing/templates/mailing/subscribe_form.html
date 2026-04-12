@@ -1,5 +1,7 @@
 {% extends "mailing/base.html" %}
-{% block title %}Subscribe{% endblock %}
+{% block title %}
+    Subscribe
+{% endblock title %}
 {% block main %}
     <h1>Subscribe</h1>
     <form method="post">
@@ -10,4 +12,4 @@
     <p>
         <a href="{% url 'index' %}">Back</a>
     </p>
-{% endblock %}
+{% endblock main %}

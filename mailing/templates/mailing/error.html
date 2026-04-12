@@ -1,8 +1,10 @@
 {% extends "mailing/base.html" %}
-{% block title %}Error{% endblock %}
+{% block title %}
+    Error
+{% endblock title %}
 {% block main %}
     <p>{{ message }}</p>
     <p>
         <a href="{% url 'index' %}">Back</a>
     </p>
-{% endblock %}
+{% endblock main %}

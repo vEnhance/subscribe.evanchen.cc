@@ -1,5 +1,7 @@
 {% extends "mailing/base.html" %}
-{% block title %}Mailing List{% endblock %}
+{% block title %}
+    Mailing List
+{% endblock title %}
 {% block main %}
     <h1>Mailing List</h1>
     <ul>
@@ -13,4 +15,4 @@
             <a href="{% url 'google_login' %}?next={% url 'oauth_unsubscribe' %}">Unsubscribe with Gmail</a>
         </li>
     </ul>
-{% endblock %}
+{% endblock main %}

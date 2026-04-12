@@ -1,11 +1,20 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{% block title %}Mailing List{% endblock %}</title>
-  </head>
-  <body>
-    <main>{% block main %}{% endblock %}</main>
-  </body>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="Mailing list server for blog.evanchen.cc">
+        <meta name="keywords" content="evan chen, blog, mailing list">
+        <title>
+            {% block title %}
+                Mailing list for blog.evanchen.cc
+            {% endblock title %}
+        </title>
+    </head>
+    <body>
+        <main>
+            {% block main %}
+            {% endblock main %}
+        </main>
+    </body>
 </html>
