@@ -14,7 +14,7 @@ class SubscriberEmail(models.Model):
     email = models.EmailField(unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    subscribed = models.BooleanField(default=False)
+    subscribed = models.BooleanField(null=True, default=None)
     google_authenticated = models.BooleanField(default=False)
     token = models.CharField(max_length=24, unique=True, default=generate_token)
 
