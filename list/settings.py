@@ -48,7 +48,7 @@ MIDDLEWARE = [
     "allauth.account.middleware.AccountMiddleware",
 ]
 
-ROOT_URLCONF = "subscribe.urls"
+ROOT_URLCONF = "list.urls"
 
 TEMPLATES = [
     {
@@ -65,7 +65,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "subscribe.wsgi.application"
+WSGI_APPLICATION = "list.wsgi.application"
 
 DATABASES = {
     "default": {
