@@ -28,6 +28,11 @@ python_functions = ["test_*"]
 [tool.djlint]
 profile = "django"
 
+[project.optional-dependencies]
+prod = [
+    "mysqlclient>=2.2.8",
+]
+
 [dependency-groups]
 dev = [
     "prek>=0.3.8",
