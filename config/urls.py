@@ -14,6 +14,11 @@ urlpatterns = [
         socialaccount_views.login_error,
         name="socialaccount_login_error",
     ),
+    path(
+        "accounts/signup/",
+        socialaccount_views.signup,
+        name="socialaccount_signup",
+    ),
     path("accounts/", include("allauth.socialaccount.providers.google.urls")),
     path("", include("mailing.urls")),
 ]
