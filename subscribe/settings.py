@@ -13,8 +13,8 @@ PRODUCTION = bool(int(os.getenv("IS_PRODUCTION") or 0))
 DEBUG = bool(int(os.getenv("DEBUG") or 0))
 if PRODUCTION:
     SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
-    ALLOWED_HOSTS = ["subscribe.evanchen.cc", ".localhost", "127.0.0.1"]
-    SITE_URL = "https://subscribe.evanchen.cc"
+    ALLOWED_HOSTS = ["list.evanchen.cc", ".localhost", "127.0.0.1"]
+    SITE_URL = "https://list.evanchen.cc"
 else:
     SECRET_KEY = "come-read-my-blog"
     INTERNAL_IPS = ["127.0.0.1"]
