@@ -1,4 +1,7 @@
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import check_password
+from django.http import HttpRequest, JsonResponse
 from django.shortcuts import render
 
 from .models import SubscriberEmail
@@ -84,3 +87,21 @@ def _render_confirm(request, action, email):
             "email": email,
         },
     )
+
+
+def subscriber_list(request: HttpRequest) -> JsonResponse:
+    if request.method != "GET":
+        return JsonResponse({"error": "Method not allowed"}, status=405)
+    expected_token = settings.SUBSCRIBER_LIST_TOKEN
+    if not expected_token:
+        return JsonResponse({"error": "API not configured"}, status=503)
+    auth_header = request.META.get("HTTP_AUTHORIZATION", "")
+    if not auth_header.startswith("Bearer "):
+        return JsonResponse({"error": "Unauthorized"}, status=401)
+    provided_token = auth_header[len("Bearer ") :]
+    if not check_password(provided_token, expected_token):
+        return JsonResponse({"error": "Forbidden"}, status=403)
+    subscribers = list(
+        SubscriberEmail.objects.filter(subscribed=True).values("email", "token")
+    )
+    return JsonResponse(subscribers, safe=False)

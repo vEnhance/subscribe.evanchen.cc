@@ -111,6 +111,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 SOCIALACCOUNT_AUTO_SIGNUP = True
 
+SUBSCRIBER_LIST_TOKEN = os.getenv("SUBSCRIBER_LIST_TOKEN", "")
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
