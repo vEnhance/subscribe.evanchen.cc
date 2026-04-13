@@ -13,28 +13,31 @@
 {% block content %}
     <p>
         Howdy.
-        This is the mailing list for <a href="https://blog.evanchen.cc/"><code>blog.evanchen.cc</code></a>.
+        This is the mail list for <a href="https://blog.evanchen.cc/"><code>blog.evanchen.cc</code></a>.
     </p>
     <hr />
     <h2>Subscribe with Google</h2>
-    <p>
-        If your email is associated to a Google account,
-        you can use OAuth to avoid the useless "confirm your subscription" email.
-    </p>
+    <p>Use OAuth to avoid "confirm your sub" email.</p>
     <ul>
         <li>
             <a href="{% url 'google_login' %}?next={% url 'oauth_subscribe' %}">Subscribe with Google</a>
         </li>
     </ul>
     <p>
-        (Conversely, you can also <a href="{% url 'google_login' %}?next={% url 'oauth_unsubscribe' %}">unsubscribe with Google</a>.)
+        (You can also <a href="{% url 'google_login' %}?next={% url 'oauth_unsubscribe' %}">unsubscribe with Google</a>.)
     </p>
     <hr />
-    <h2>Subscribe with another email</h2>
+    <h2>Use non-Google email</h2>
+    <p>For now, please contact Evan from the email you want to be added.</p>
+    <hr />
+    <h2>Technical details</h2>
     <p>
-        For now, please contact Evan from the email you want to be added.
-        (In the future, there may be an option to send an email
-        to a special address to add yourself without waiting for Evan.)
+        This is a really simple Django project that just uses
+        <code>allauth</code> to validate Google account ownership
+        and then stores the email in a single model.
+        You can read the
+        <a href="https://github.com/vEnhance/subscribe.evanchen.cc">source code on GitHub</a>
+        if you want to see how it works.
     </p>
 {% endblock content %}
 {% block back_link %}

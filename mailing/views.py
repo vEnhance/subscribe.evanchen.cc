@@ -17,9 +17,7 @@ _CONFIRM_TITLES = {
 
 
 def index(request):
-    return render(
-        request, "mailing/index.html", {"page_title": "blog.evanchen.cc mailing list"}
-    )
+    return render(request, "mailing/index.html", {"page_title": "Evan's mailing list"})
 
 
 def unsubscribe_by_token(request, token):
