@@ -16,6 +16,11 @@
         This is the public mailing list for my blog,
         <a href="https://blog.evanchen.cc/"><code>blog.evanchen.cc</code></a>.
     </p>
+    {% if request.user.is_superuser %}
+        <p>
+            <b>… Oh, wait. Hello boss. <a href="{% url "admin:index" %}">Right this way.</a></b>
+        </p>
+    {% endif %}
     <hr />
     <h2>Subscribe with Google</h2>
     <p>Use OAuth to avoid "confirm your sub" email.</p>
