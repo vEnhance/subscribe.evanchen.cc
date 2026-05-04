@@ -8,6 +8,12 @@
     #le-serrafim a {
         text-decoration: none;
     }
+    #envelope th {
+        text-align: left;
+    }
+    #envelope th, #envelope td {
+        padding: 0px 8px;
+    }
     </style>
 {% endblock extra_css %}
 {% block content %}
@@ -33,8 +39,31 @@
         (You can also <a href="{% url 'google_login' %}?next={% url 'oauth_unsubscribe' %}">unsubscribe with Google</a>.)
     </p>
     <hr />
-    <h2>Use non-Google email</h2>
-    <p>For now, please contact Evan from the email you want to be added.</p>
+    <h2>Using a non-Google email</h2>
+    <p>
+        If the email you're trying to add isn't associated to a Google account,
+        you can instead send an email with the following envelope.
+    </p>
+    <table id="envelope">
+        <tr>
+            <th>To</th>
+            <td>
+                <a href="mailto:subscribe@evanchen.cc"><code>subscribe@evanchen.cc</code></a>
+            </td>
+        </tr>
+        <tr>
+            <th>From</th>
+            <td>
+                <code>your-username@domain.net</code>
+            </td>
+        </tr>
+        <tr>
+            <th>Subject</th>
+            <td>
+                <code>add: your-username@domain.net</code>
+            </td>
+        </tr>
+    </table>
     <hr />
     <h2>Technical details</h2>
     <p>
