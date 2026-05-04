@@ -92,14 +92,14 @@ def _render_confirm(request, action, email):
 def subscriber_list(request: HttpRequest) -> JsonResponse:
     if request.method != "GET":
         return JsonResponse({"error": "Method not allowed"}, status=405)
-    expected_token = settings.SUBSCRIBER_LIST_TOKEN
-    if not expected_token:
+    expected_hash = settings.SUBSCRIBER_LIST_TOKEN_HASH
+    if not expected_hash:
         return JsonResponse({"error": "API not configured"}, status=503)
     auth_header = request.META.get("HTTP_AUTHORIZATION", "")
     if not auth_header.startswith("Bearer "):
         return JsonResponse({"error": "Unauthorized"}, status=401)
     provided_token = auth_header[len("Bearer ") :]
-    if not check_password(provided_token, expected_token):
+    if not check_password(provided_token, expected_hash):
         return JsonResponse({"error": "Forbidden"}, status=403)
     subscribers = list(
         SubscriberEmail.objects.filter(subscribed=True).values("email", "token")

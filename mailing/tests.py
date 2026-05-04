@@ -138,13 +138,13 @@ _TOKEN_HASH = make_password(_TOKEN)
 
 
 def test_subscriber_list_no_auth(client, db, settings):
-    settings.SUBSCRIBER_LIST_TOKEN = _TOKEN_HASH
+    settings.SUBSCRIBER_LIST_TOKEN_HASH = _TOKEN_HASH
     resp = client.get(reverse("subscriber_list"))
     assert resp.status_code == 401
 
 
 def test_subscriber_list_wrong_token(client, db, settings):
-    settings.SUBSCRIBER_LIST_TOKEN = _TOKEN_HASH
+    settings.SUBSCRIBER_LIST_TOKEN_HASH = _TOKEN_HASH
     resp = client.get(
         reverse("subscriber_list"),
         HTTP_AUTHORIZATION="Bearer wrongtoken",
@@ -153,7 +153,7 @@ def test_subscriber_list_wrong_token(client, db, settings):
 
 
 def test_subscriber_list_returns_subscribed_only(client, db, settings):
-    settings.SUBSCRIBER_LIST_TOKEN = _TOKEN_HASH
+    settings.SUBSCRIBER_LIST_TOKEN_HASH = _TOKEN_HASH
     SubscriberEmail.objects.create(email="yes@example.com", subscribed=True)
     SubscriberEmail.objects.create(email="no@example.com", subscribed=False)
     SubscriberEmail.objects.create(email="null@example.com", subscribed=None)
@@ -169,7 +169,7 @@ def test_subscriber_list_returns_subscribed_only(client, db, settings):
 
 
 def test_subscriber_list_post_not_allowed(client, db, settings):
-    settings.SUBSCRIBER_LIST_TOKEN = _TOKEN_HASH
+    settings.SUBSCRIBER_LIST_TOKEN_HASH = _TOKEN_HASH
     resp = client.post(
         reverse("subscriber_list"),
         HTTP_AUTHORIZATION=f"Bearer {_TOKEN}",
