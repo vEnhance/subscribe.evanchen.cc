@@ -17,6 +17,12 @@ class SubscriberEmail(models.Model):
     subscribed = models.BooleanField(null=True, default=None)
     google_authenticated = models.BooleanField(default=False)
     token = models.CharField(max_length=24, unique=True, default=generate_token)
+    name = models.CharField(max_length=255, blank=True)
+    custom_greeting = models.TextField(
+        blank=True,
+        help_text="A customized greeting for the megaphone. "
+        "Used to add a personal note to friends.",
+    )
 
     def __str__(self):
         return self.email

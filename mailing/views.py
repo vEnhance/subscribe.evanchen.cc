@@ -43,6 +43,7 @@ def oauth_subscribe(request):
         obj, _ = SubscriberEmail.objects.get_or_create(email=email)
         obj.subscribed = True
         obj.google_authenticated = True
+        obj.name = request.user.get_full_name()
         obj.save()
         return _render_done(request, "subscribed", email)
     elif SubscriberEmail.objects.filter(email=email, subscribed=True).exists():
@@ -103,6 +104,8 @@ def subscriber_list(request: HttpRequest) -> JsonResponse:
     if not check_password(provided_token, expected_hash):
         return JsonResponse({"error": "Forbidden"}, status=403)
     subscribers = list(
-        SubscriberEmail.objects.filter(subscribed=True).values("email", "token")
+        SubscriberEmail.objects.filter(subscribed=True).values(
+            "email", "token", "name", "custom_greeting"
+        )
     )
     return JsonResponse({"timestamp": now().isoformat(), "subscribers": subscribers})

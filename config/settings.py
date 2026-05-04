@@ -111,7 +111,7 @@ SITE_ID = 1
 
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
-        "SCOPE": ["email"],
+        "SCOPE": ["email", "profile"],
         "AUTH_PARAMS": {"access_type": "online"},
     }
 }
