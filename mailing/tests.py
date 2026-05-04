@@ -6,6 +6,11 @@ from django.urls import reverse
 from .models import SubscriberEmail
 
 
+@pytest.fixture(autouse=True)
+def fast_password_hasher(settings):
+    settings.PASSWORD_HASHERS = ["django.contrib.auth.hashers.MD5PasswordHasher"]
+
+
 @pytest.fixture
 def user(db):
     return User.objects.create_user(
@@ -134,17 +139,21 @@ def test_oauth_unsubscribe_post_not_found(auth_client, db):
 
 
 _TOKEN = "testtoken"
-_TOKEN_HASH = make_password(_TOKEN)
 
 
-def test_subscriber_list_no_auth(client, db, settings):
-    settings.SUBSCRIBER_LIST_TOKEN_HASH = _TOKEN_HASH
+@pytest.fixture
+def token_hash(settings):
+    h = make_password(_TOKEN)
+    settings.SUBSCRIBER_LIST_TOKEN_HASH = h
+    return h
+
+
+def test_subscriber_list_no_auth(client, db, token_hash):
     resp = client.get(reverse("subscriber_list"))
     assert resp.status_code == 401
 
 
-def test_subscriber_list_wrong_token(client, db, settings):
-    settings.SUBSCRIBER_LIST_TOKEN_HASH = _TOKEN_HASH
+def test_subscriber_list_wrong_token(client, db, token_hash):
     resp = client.get(
         reverse("subscriber_list"),
         HTTP_AUTHORIZATION="Bearer wrongtoken",
@@ -152,8 +161,7 @@ def test_subscriber_list_wrong_token(client, db, settings):
     assert resp.status_code == 403
 
 
-def test_subscriber_list_returns_subscribed_only(client, db, settings):
-    settings.SUBSCRIBER_LIST_TOKEN_HASH = _TOKEN_HASH
+def test_subscriber_list_returns_subscribed_only(client, db, token_hash):
     SubscriberEmail.objects.create(email="yes@example.com", subscribed=True)
     SubscriberEmail.objects.create(email="no@example.com", subscribed=False)
     SubscriberEmail.objects.create(email="null@example.com", subscribed=None)
@@ -170,8 +178,7 @@ def test_subscriber_list_returns_subscribed_only(client, db, settings):
     assert len(subscribers[0]["token"]) == 24
 
 
-def test_subscriber_list_post_not_allowed(client, db, settings):
-    settings.SUBSCRIBER_LIST_TOKEN_HASH = _TOKEN_HASH
+def test_subscriber_list_post_not_allowed(client, db, token_hash):
     resp = client.post(
         reverse("subscriber_list"),
         HTTP_AUTHORIZATION=f"Bearer {_TOKEN}",
