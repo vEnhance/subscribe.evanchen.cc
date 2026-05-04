@@ -43,7 +43,8 @@ def oauth_subscribe(request):
         obj, _ = SubscriberEmail.objects.get_or_create(email=email)
         obj.subscribed = True
         obj.google_authenticated = True
-        obj.name = request.user.get_full_name()
+        if not obj.name:
+            obj.name = request.user.get_full_name()
         obj.save()
         return _render_done(request, "subscribed", email)
     elif SubscriberEmail.objects.filter(email=email, subscribed=True).exists():
