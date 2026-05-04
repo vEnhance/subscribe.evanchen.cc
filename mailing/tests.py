@@ -163,9 +163,11 @@ def test_subscriber_list_returns_subscribed_only(client, db, settings):
     )
     assert resp.status_code == 200
     data = resp.json()
-    assert len(data) == 1
-    assert data[0]["email"] == "yes@example.com"
-    assert len(data[0]["token"]) == 24
+    assert "timestamp" in data
+    subscribers = data["subscribers"]
+    assert len(subscribers) == 1
+    assert subscribers[0]["email"] == "yes@example.com"
+    assert len(subscribers[0]["token"]) == 24
 
 
 def test_subscriber_list_post_not_allowed(client, db, settings):

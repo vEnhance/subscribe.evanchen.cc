@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import render
+from django.utils.timezone import now
 
 from .models import SubscriberEmail
 
@@ -104,4 +105,4 @@ def subscriber_list(request: HttpRequest) -> JsonResponse:
     subscribers = list(
         SubscriberEmail.objects.filter(subscribed=True).values("email", "token")
     )
-    return JsonResponse(subscribers, safe=False)
+    return JsonResponse({"timestamp": now().isoformat(), "subscribers": subscribers})
